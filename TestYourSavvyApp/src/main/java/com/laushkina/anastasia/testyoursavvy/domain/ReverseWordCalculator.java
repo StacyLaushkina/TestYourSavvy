@@ -8,10 +8,11 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class ReverseWordCalculator {
-    public static List<Character> reverseWord(List<Character> input){
+
+    public static String reverseWord(String input){
         if (input == null || input.isEmpty()) return null;
 
-        List<ExtendedCharacter> word = retractToPositionedLetters(input);
+        List<ExtendedCharacter> word = restructToPositionedLetters(input);
         for (ExtendedCharacter letter : word) {
             int randomNum;
             do {
@@ -20,7 +21,7 @@ public class ReverseWordCalculator {
             while (isExist(word, randomNum));
             letter.setNewPosition(randomNum);
         }
-        return getListOfCharacters(word);
+        return getStringFromPositionedLetters(word);
     }
 
     private static boolean isExist(List<ExtendedCharacter> word, int position){
@@ -30,16 +31,31 @@ public class ReverseWordCalculator {
         return false;
     }
 
-    private static List<ExtendedCharacter> retractToPositionedLetters(List<Character> input) {
+    private static List<ExtendedCharacter> restructToPositionedLetters(String input) {
         List<ExtendedCharacter> result = new LinkedList<>();
         int counter = 0;
-        for (Character letter : input) {
+        for (Character letter : input.toCharArray()) {
             result.add(new ExtendedCharacter(counter, -1, letter));
             counter = counter + 1;
         }
         return result;
     }
 
+    private static String getStringFromPositionedLetters(List<ExtendedCharacter> positionedLetters){
+        StringBuilder stringBuilder = new StringBuilder();
+        Collections.sort(positionedLetters, new Comparator<ExtendedCharacter>() {
+            @Override
+            public int compare(ExtendedCharacter lhs, ExtendedCharacter rhs) {
+                return lhs.getNewPosition() > rhs.getNewPosition() ? -1 : (lhs.getNewPosition() < rhs.getNewPosition() ) ? 1 : 0;
+            }
+        });
+        for (ExtendedCharacter letter : positionedLetters) {
+            stringBuilder.append(letter.getValue());
+        }
+        return stringBuilder.toString();
+    }
+
+    // TODO use when drag-and-drop will be implemented
     private static List<Character> getListOfCharacters(List<ExtendedCharacter> positionedLetters){
         List<Character> characters = new ArrayList<>();
         Collections.sort(positionedLetters, new Comparator<ExtendedCharacter>() {

@@ -1,6 +1,7 @@
 package com.laushkina.anastasia.testyoursavvy.view;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,7 +16,8 @@ public class SelectTestActivity extends Activity {
     }
 
     public void navigateToAnagram(View view) {
-        // TODO
+        Intent intent = new Intent(this, AnagramActivity.class);
+        startActivity(intent);
     }
 
     public void navigateToVision(View view) {
