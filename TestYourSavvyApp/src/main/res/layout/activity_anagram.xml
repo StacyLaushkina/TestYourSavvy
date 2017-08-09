@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/mixed_word"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="random"
+        android:gravity="center"
+        android:textSize="21sp"/>
+
+    <EditText
+        android:id="@+id/restored_word"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:hint="Please enter original word"
+        android:layout_below="@+id/mixed_word"
+        android:textSize="21sp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="*Swipe to left to dismiss"
+        android:layout_above="@+id/submit_button"
+        android:layout_alignParentEnd="true"/>
+
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:onClick="checkRestoredWord"
+        android:text="Submit"
+        android:textSize="21sp"/>
+
+</RelativeLayout>
