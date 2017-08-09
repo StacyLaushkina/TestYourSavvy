@@ -5,16 +5,23 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.laushkina.anastasia.testyoursavvy.R;
+import com.laushkina.anastasia.testyoursavvy.db.StatisticsRepository;
 import com.laushkina.anastasia.testyoursavvy.domain.ReverseWordCalculator;
+import com.laushkina.anastasia.testyoursavvy.domain.Statistics;
+import com.laushkina.anastasia.testyoursavvy.presenter.AnagramPresenter;
 
 public class AnagramActivity extends ParentActivity {
+    // TODO extend dictionary of words, save in db
     private static final String trueWord = "Kingdom";
+
+    private AnagramPresenter presenter;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anagram);
 
+        presenter = new AnagramPresenter();
         initializeScreen();
     }
 
@@ -32,10 +39,12 @@ public class AnagramActivity extends ParentActivity {
             return;
         }
         if (trueWord.equals(restoredWord.toString())) {
-            // TODO count amount of correct/incorrect answers
+            presenter.saveSucess(this);
             showToast(getResources().getString(R.string.success_message));
             finish();
+            return;
         }
+        presenter.saveFailue(this);
         showToast(getResources().getString(R.string.incorrect_message));
     }
 }
