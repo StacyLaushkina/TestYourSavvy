@@ -8,7 +8,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.laushkina.anastasia.testyoursavvy.R;
@@ -23,6 +22,7 @@ public class SelectTestActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_test);
+
         presenter = new SelectTestPresenter();
     }
 
@@ -62,7 +62,7 @@ public class SelectTestActivity extends Activity {
     }
 
     public void navigateToVision(View view) {
-        // TODO
+        //TODO
     }
 
     public void navigateToGPS(View view) {

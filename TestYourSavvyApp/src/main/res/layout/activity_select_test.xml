@@ -55,7 +55,7 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Google visionResults"
+            android:text="Google vision"
             android:clickable="true"
             android:onClick="navigateToVision"
             android:layout_below="@+id/vision_stats"/>
