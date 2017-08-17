@@ -15,6 +15,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.laushkina.anastasia.testyoursavvy.R;
+import com.laushkina.anastasia.testyoursavvy.presenter.VisionPresenter;
 
 import java.io.IOException;
 
@@ -23,12 +24,11 @@ public class VisionActivity extends Activity {
     // Intent request code to handle updating play services if needed.
     private static final int RC_HANDLE_GMS = 9001;
 
-    // Permission request codes need to be < 256
-    private static final int RC_HANDLE_CAMERA_PERM = 2;
+    private CameraSource cameraSource;
+    private CameraSourcePreview preview;
+    private GraphicOverlay<OcrGraphic> graphicOverlay;
 
-    private CameraSource mCameraSource;
-    private CameraSourcePreview mPreview;
-    private GraphicOverlay<OcrGraphic> mGraphicOverlay;
+    private VisionPresenter presenter;
 
     @Override
     public void onCreate(Bundle bundle) {
@@ -38,8 +38,10 @@ public class VisionActivity extends Activity {
     }
 
     private void initialize(){
-        mPreview = (CameraSourcePreview) findViewById(R.id.preview);
-        mGraphicOverlay = (GraphicOverlay<OcrGraphic>) findViewById(R.id.graphicOverlay);
+        // TODO show the word for search
+        presenter = new VisionPresenter();
+        preview = (CameraSourcePreview) findViewById(R.id.preview);
+        graphicOverlay = (GraphicOverlay<OcrGraphic>) findViewById(R.id.graphicOverlay);
 
         // Permission check is not needed because it was requested in manifest
         createCameraSource();
@@ -55,7 +57,7 @@ public class VisionActivity extends Activity {
         // graphics for each text block on screen.  The factory is used by the multi-processor to
         // create a separate tracker instance for each text block.
         TextRecognizer textRecognizer = new TextRecognizer.Builder(context).build();
-        textRecognizer.setProcessor(new OcrDetectorProcessor(mGraphicOverlay));
+        textRecognizer.setProcessor(new OcrDetectorProcessor(graphicOverlay, presenter.getTrueWord()));
 
         if (!textRecognizer.isOperational()) {
             // Note: The first time that an app using a Vision API is installed on a
@@ -82,7 +84,7 @@ public class VisionActivity extends Activity {
 
         // Creates and starts the camera.  Note that this uses a higher resolution in comparison
         // to other detection examples to enable the text recognizer to detect small pieces of text.
-        mCameraSource =
+        cameraSource =
                 new CameraSource.Builder(getApplicationContext(), textRecognizer)
                         .setFacing(CameraSource.CAMERA_FACING_BACK)
                         .setRequestedPreviewSize(1280, 1024)
@@ -100,16 +102,16 @@ public class VisionActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (mPreview != null) {
-            mPreview.stop();
+        if (preview != null) {
+            preview.stop();
         }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPreview != null) {
-            mPreview.release();
+        if (preview != null) {
+            preview.release();
         }
     }
 
@@ -126,13 +128,13 @@ public class VisionActivity extends Activity {
             dlg.show();
         }
 
-        if (mCameraSource != null) {
+        if (cameraSource != null) {
             try {
-                mPreview.start(mCameraSource, mGraphicOverlay);
+                preview.start(cameraSource, graphicOverlay);
             } catch (IOException e) {
                 Log.e(this.getClass().getCanonicalName(), "Unable to start camera source.", e);
-                mCameraSource.release();
-                mCameraSource = null;
+                cameraSource.release();
+                cameraSource = null;
             }
         }
     }

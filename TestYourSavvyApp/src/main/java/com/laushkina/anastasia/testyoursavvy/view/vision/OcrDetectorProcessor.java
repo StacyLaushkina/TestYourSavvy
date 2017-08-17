@@ -9,11 +9,12 @@ import com.google.android.gms.vision.text.TextBlock;
 class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
 
     private GraphicOverlay<OcrGraphic> graphicOverlay;
+    private String wordForSearch;
 
-
-    OcrDetectorProcessor(GraphicOverlay<OcrGraphic> ocrGraphicOverlay) {
+    OcrDetectorProcessor(GraphicOverlay<OcrGraphic> ocrGraphicOverlay, String wordForSearch) {
         graphicOverlay = ocrGraphicOverlay;
-        }
+        this.wordForSearch = wordForSearch;
+    }
 
     /**
      * Called by the detector to deliver detection results.
@@ -30,6 +31,10 @@ class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
             TextBlock item = items.valueAt(i);
             if (item != null && item.getValue() != null) {
                 Log.d(this.getClass().getCanonicalName(), "Text detected! " + item.getValue());
+                // TODO check if the word was found
+                if (item.getValue().equals(wordForSearch)) {
+                    Log.d(this.getClass().getCanonicalName(), "Searching text detected!");
+                }
             }
             OcrGraphic graphic = new OcrGraphic(graphicOverlay, item);
             graphicOverlay.add(graphic);
@@ -40,7 +45,5 @@ class OcrDetectorProcessor implements Detector.Processor<TextBlock> {
      * Frees the resources associated with this detection processor.
      */
     @Override
-    public void release() {
-                graphicOverlay.clear();
-                }
+    public void release() { graphicOverlay.clear(); }
 }
