@@ -17,13 +17,13 @@ public class AnagramActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anagram);
 
-        presenter = new AnagramPresenter();
+        presenter = new AnagramPresenter(this);
         initializeScreen();
     }
 
     private void initializeScreen(){
         TextView mixedWordView = (TextView)findViewById(R.id.mixed_word);
-        String mixedWord = ReverseWordCalculator.reverseWord(presenter.getTrueWord());
+        String mixedWord = ReverseWordCalculator.reverseWord(presenter.getNextWord());
         mixedWordView.setText(mixedWord);
     }
 

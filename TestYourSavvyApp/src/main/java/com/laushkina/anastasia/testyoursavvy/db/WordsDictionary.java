@@ -41,6 +41,10 @@ public class WordsDictionary {
         return words.get(indexOfLast);
     }
 
+    public void setIndexOfLast(int indexOfLast){
+        this.indexOfLast = indexOfLast;
+    }
+
     public void reset() {
         this.indexOfLast = -1;
     }

@@ -1,12 +1,14 @@
 package com.laushkina.anastasia.testyoursavvy.view.vision;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -16,10 +18,9 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.laushkina.anastasia.testyoursavvy.R;
 import com.laushkina.anastasia.testyoursavvy.presenter.VisionPresenter;
+import com.laushkina.anastasia.testyoursavvy.view.ParentActivity;
 
-import java.io.IOException;
-
-public class VisionActivity extends Activity {
+public class VisionActivity extends ParentActivity {
 
     // Intent request code to handle updating play services if needed.
     private static final int RC_HANDLE_GMS = 9001;
@@ -30,16 +31,28 @@ public class VisionActivity extends Activity {
 
     private VisionPresenter presenter;
 
+    private BroadcastReceiver searchFinishedIntentReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+             if (OcrDetectorProcessor.searchFinishedIntent.equals(intent.getAction())) {
+                 presenter.saveSuccess(getApplicationContext());
+                 finish();
+             }
+        }
+    };
+
     @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_vision);
         initialize();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(searchFinishedIntentReceiver, new IntentFilter(OcrDetectorProcessor.searchFinishedIntent));
     }
 
     private void initialize(){
-        // TODO show the word for search
-        presenter = new VisionPresenter();
+        presenter = new VisionPresenter(this);
         preview = (CameraSourcePreview) findViewById(R.id.preview);
         graphicOverlay = (GraphicOverlay<OcrGraphic>) findViewById(R.id.graphicOverlay);
 
@@ -52,23 +65,10 @@ public class VisionActivity extends Activity {
     private void createCameraSource() {
         Context context = getApplicationContext();
 
-        // A text recognizer is created to find text.  An associated multi-processor instance
-        // is set to receive the text recognition results, track the text, and maintain
-        // graphics for each text block on screen.  The factory is used by the multi-processor to
-        // create a separate tracker instance for each text block.
         TextRecognizer textRecognizer = new TextRecognizer.Builder(context).build();
-        textRecognizer.setProcessor(new OcrDetectorProcessor(graphicOverlay, presenter.getTrueWord()));
+        textRecognizer.setProcessor(new OcrDetectorProcessor(graphicOverlay, presenter.getNextWord(), this));
 
         if (!textRecognizer.isOperational()) {
-            // Note: The first time that an app using a Vision API is installed on a
-            // device, GMS will download a native libraries to the device in order to do detection.
-            // Usually this completes before the app is run for the first time.  But if that
-            // download has not yet completed, then the above call will not detect any text,
-            // barcodes, or faces.
-            //
-            // isOperational() can be used to check if the required native libraries are currently
-            // available.  The detectors will automatically become operational once the library
-            // downloads complete on device.
             Log.w(this.getClass().getCanonicalName(), "Detector dependencies are not yet available.");
 
             // Check for low storage.  If there is low storage, the native library will not be
@@ -84,13 +84,17 @@ public class VisionActivity extends Activity {
 
         // Creates and starts the camera.  Note that this uses a higher resolution in comparison
         // to other detection examples to enable the text recognizer to detect small pieces of text.
-        cameraSource =
-                new CameraSource.Builder(getApplicationContext(), textRecognizer)
+        cameraSource = new CameraSource.Builder(getApplicationContext(), textRecognizer)
                         .setFacing(CameraSource.CAMERA_FACING_BACK)
                         .setRequestedPreviewSize(1280, 1024)
                         .setRequestedFps(2.0f)
                         .setAutoFocusEnabled(true)
                         .build();
+
+        Snackbar.make(graphicOverlay, getResources().getString(R.string.find_word_hint) + presenter.getTrueWord()
+                        + "\n" + getResources().getString(R.string.swipe_to_dismiss),
+                Snackbar.LENGTH_LONG)
+                .show();
     }
 
     @Override
@@ -113,6 +117,8 @@ public class VisionActivity extends Activity {
         if (preview != null) {
             preview.release();
         }
+        // Unregister since the activity is about to be closed.
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(searchFinishedIntentReceiver);
     }
 
     /**
@@ -131,8 +137,8 @@ public class VisionActivity extends Activity {
         if (cameraSource != null) {
             try {
                 preview.start(cameraSource, graphicOverlay);
-            } catch (IOException e) {
-                Log.e(this.getClass().getCanonicalName(), "Unable to start camera source.", e);
+            } catch (Exception e) {
+                Log.e(this.getClass().getCanonicalName(), e.getMessage());
                 cameraSource.release();
                 cameraSource = null;
             }

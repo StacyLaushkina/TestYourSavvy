@@ -21,6 +21,7 @@ public class Statistics {
         this.gpsResults = gpsResults;
     }
 
+    //TODO Enum and getresults(Enum)
     public TestResult getVisionResults() {
         return visionResults;
     }

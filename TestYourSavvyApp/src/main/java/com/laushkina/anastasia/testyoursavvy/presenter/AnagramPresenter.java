@@ -7,14 +7,21 @@ import com.laushkina.anastasia.testyoursavvy.db.WordsDictionary;
 import com.laushkina.anastasia.testyoursavvy.domain.Statistics;
 
 public class AnagramPresenter {
+
     private String trueWord;
 
-    public AnagramPresenter() {
-        WordsDictionary.getInstance().reset();
-        trueWord =  WordsDictionary.getInstance().getNext();
+    public AnagramPresenter(Context context) {
+        Statistics currentStatistics = StatisticsRepository.getStatistics(context);
+        Integer amountOfCorrect = currentStatistics.getAnagramResults().getAmountOfCorrectAnswers();
+        WordsDictionary.getInstance().setIndexOfLast(amountOfCorrect == null ? -1 : amountOfCorrect - 1);
     }
 
     public String getTrueWord(){
+       return trueWord;
+    }
+
+    public String getNextWord(){
+        trueWord = WordsDictionary.getInstance().getNext();
         return trueWord;
     }
 
