@@ -14,6 +14,7 @@ import com.laushkina.anastasia.testyoursavvy.R;
 import com.laushkina.anastasia.testyoursavvy.domain.Statistics;
 import com.laushkina.anastasia.testyoursavvy.domain.TestResult;
 import com.laushkina.anastasia.testyoursavvy.presenter.SelectTestPresenter;
+import com.laushkina.anastasia.testyoursavvy.view.vision.VisionActivity;
 
 public class SelectTestActivity extends Activity {
     private SelectTestPresenter presenter;
@@ -62,7 +63,8 @@ public class SelectTestActivity extends Activity {
     }
 
     public void navigateToVision(View view) {
-        //TODO
+        Intent intent = new Intent(this, VisionActivity.class);
+        startActivity(intent);
     }
 
     public void navigateToGPS(View view) {
