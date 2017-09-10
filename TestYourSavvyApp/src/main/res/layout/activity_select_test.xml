@@ -30,14 +30,13 @@
             android:gravity="center"
             android:padding="8dp"
             android:background="@android:color/darker_gray"/>
-        <Button
+        <ImageView
             android:id="@+id/anagram_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Anagram"
-            android:clickable="true"
             android:onClick="navigateToAnagram"
-            android:layout_below="@+id/anagram_stats"/>
+            android:layout_below="@+id/anagram_stats"
+            android:src="@drawable/anagram_background"/>
     </RelativeLayout>
 
     <RelativeLayout

@@ -14,6 +14,7 @@ import com.laushkina.anastasia.testyoursavvy.R;
 import com.laushkina.anastasia.testyoursavvy.domain.Statistics;
 import com.laushkina.anastasia.testyoursavvy.domain.TestResult;
 import com.laushkina.anastasia.testyoursavvy.presenter.SelectTestPresenter;
+import com.laushkina.anastasia.testyoursavvy.view.vision.VisionActivity;
 
 public class SelectTestActivity extends Activity {
     private SelectTestPresenter presenter;
@@ -40,20 +41,25 @@ public class SelectTestActivity extends Activity {
 
     private void initializeAnagram(TestResult testResult){
         TextView anagramStats = (TextView)findViewById(R.id.anagram_stats);
+        anagramStats.setText(getResultingString(testResult));
+    }
+
+    private void initializeVision(TestResult testResult){
+        TextView visionStats = (TextView)findViewById(R.id.vision_stats);
+        visionStats.setText(getResultingString(testResult));
+    }
+
+    private void initializeGPS(TestResult testResult){
+        //TODO
+    }
+
+    private Spannable getResultingString(TestResult testResult){
         String correct = testResult.getAmountOfCorrectAnswers() == null ? "" : testResult.getAmountOfCorrectAnswers().toString();
         String assump = testResult.getAmountOfAssumptions() == null ? "" : testResult.getAmountOfAssumptions().toString();
         String result = correct + " / " +  assump;
         Spannable spannable = new SpannableString(result);
         spannable.setSpan(new ForegroundColorSpan(Color.GREEN), 0, correct.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        anagramStats.setText(spannable);
-    }
-
-    private void initializeVision(TestResult testResult){
-        //TODO
-    }
-
-    private void initializeGPS(TestResult testResult){
-        //TODO
+        return spannable;
     }
 
     public void navigateToAnagram(View view) {
@@ -62,7 +68,8 @@ public class SelectTestActivity extends Activity {
     }
 
     public void navigateToVision(View view) {
-        //TODO
+        Intent intent = new Intent(this, VisionActivity.class);
+        startActivity(intent);
     }
 
     public void navigateToGPS(View view) {

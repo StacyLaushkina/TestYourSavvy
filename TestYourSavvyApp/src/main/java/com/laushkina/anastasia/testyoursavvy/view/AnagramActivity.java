@@ -5,14 +5,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.laushkina.anastasia.testyoursavvy.R;
-import com.laushkina.anastasia.testyoursavvy.db.StatisticsRepository;
 import com.laushkina.anastasia.testyoursavvy.domain.ReverseWordCalculator;
-import com.laushkina.anastasia.testyoursavvy.domain.Statistics;
 import com.laushkina.anastasia.testyoursavvy.presenter.AnagramPresenter;
 
 public class AnagramActivity extends ParentActivity {
-    // TODO extend dictionary of words, save in db
-    private static final String trueWord = "Kingdom";
 
     private AnagramPresenter presenter;
 
@@ -21,13 +17,13 @@ public class AnagramActivity extends ParentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_anagram);
 
-        presenter = new AnagramPresenter();
+        presenter = new AnagramPresenter(this);
         initializeScreen();
     }
 
     private void initializeScreen(){
         TextView mixedWordView = (TextView)findViewById(R.id.mixed_word);
-        String mixedWord = ReverseWordCalculator.reverseWord(trueWord);
+        String mixedWord = ReverseWordCalculator.reverseWord(presenter.getNextWord());
         mixedWordView.setText(mixedWord);
     }
 
@@ -38,13 +34,13 @@ public class AnagramActivity extends ParentActivity {
             showToast(getResources().getString(R.string.empty_string_warning));
             return;
         }
-        if (trueWord.equals(restoredWord.toString())) {
-            presenter.saveSucess(this);
+        if (presenter.getTrueWord().equals(restoredWord.toString())) {
+            presenter.saveSuccess(this);
             showToast(getResources().getString(R.string.success_message));
             finish();
             return;
         }
-        presenter.saveFailue(this);
+        presenter.saveFailure(this);
         showToast(getResources().getString(R.string.incorrect_message));
     }
 }

@@ -27,6 +27,11 @@
             android:name=".view.AnagramActivity"
             android:label="@string/anagram_screen_label"/>
 
+        <activity
+            android:name=".view.vision.VisionActivity"
+            android:label="@string/vision_screen_label"/>
+
+
     </application>
 
 </manifest>
