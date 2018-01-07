@@ -4,4 +4,5 @@
     <string name="success_message">Correct! Congratulations.</string>
     <string name="incorrect_message">Incorrect. Pleas try again.</string>
     <string name="hint_input_message">Please enter original word</string>
+    <string name="submit_message">Submit</string>
 </resources>

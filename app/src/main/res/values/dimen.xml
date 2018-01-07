@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_margin">8dp</dimen>
+
+    <dimen name="menu_header_height">100dp</dimen>
+    <dimen name="menu_header_image_size">80dp</dimen>
+
+    <dimen name="text_size_huge">21sp</dimen>
+    <dimen name="text_size_big">17sp</dimen>
+    <dimen name="text_size_medium">13sp</dimen>
+</resources>

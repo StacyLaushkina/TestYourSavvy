@@ -14,8 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".view.SelectTestActivity"
-            android:label="@string/select_test_screen_label">
+            android:name=".view.MainActivity"
+            android:label="Main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,13 +24,9 @@
         </activity>
 
         <activity
-            android:name=".view.AnagramActivity"
-            android:label="@string/anagram_screen_label"/>
-
-        <activity
             android:name=".view.vision.VisionActivity"
+            android:parentActivityName=".view.MainActivity"
             android:label="@string/vision_screen_label"/>
-
 
     </application>
 

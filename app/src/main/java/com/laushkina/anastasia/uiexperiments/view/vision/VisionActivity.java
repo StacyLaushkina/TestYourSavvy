@@ -1,6 +1,7 @@
 package com.laushkina.anastasia.uiexperiments.view.vision;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -18,9 +19,8 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.text.TextRecognizer;
 import com.laushkina.anastasia.uiexperiments.R;
 import com.laushkina.anastasia.uiexperiments.presenter.VisionPresenter;
-import com.laushkina.anastasia.uiexperiments.view.ParentActivity;
 
-public class VisionActivity extends ParentActivity {
+public class VisionActivity extends Activity {
 
     // Intent request code to handle updating play services if needed.
     private static final int RC_HANDLE_GMS = 9001;

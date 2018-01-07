@@ -23,10 +23,10 @@
                 android:id="@+id/toolbar"
                 layout="@layout/toolbar" />
 
-            <include
-                layout="@layout/anagram_content"
+            <FrameLayout
+                android:id="@+id/content_frame"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
         </LinearLayout>
 
 
