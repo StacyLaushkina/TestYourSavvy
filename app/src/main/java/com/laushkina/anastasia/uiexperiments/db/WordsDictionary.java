@@ -4,27 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WordsDictionary {
+    public static final int wordLength = 5;
     private List<String> words;
     private int indexOfLast;
     private static WordsDictionary instance;
 
     private WordsDictionary() {
         this.words = new ArrayList<>();
-        this.words.add("AND");
-        this.words.add("BALL");
-        this.words.add("PIE");
-        this.words.add("FORM");
-        this.words.add("GOAL");
-        this.words.add("LEAF");
-        this.words.add("MUST");
-        this.words.add("RAIN");
         this.words.add("BRAVE");
         this.words.add("PIECE");
         this.words.add("DREAM");
         this.words.add("TRUST");
-        this.words.add("FRIEND");
-        this.words.add("ORANGE");
-        this.words.add("BELIEVE");
+        this.words.add("WORLD");
+        this.words.add("CLOCK");
 
         indexOfLast = -1;
     }
@@ -36,8 +28,11 @@ public class WordsDictionary {
         return instance;
     }
 
-    public String getNext(){
+    public synchronized String getNext(){
         indexOfLast += 1;
+        if (indexOfLast >= words.size()) {
+            indexOfLast = 0;
+        }
         return words.get(indexOfLast);
     }
 

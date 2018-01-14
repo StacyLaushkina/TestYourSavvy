@@ -1,16 +1,16 @@
 package com.laushkina.anastasia.uiexperiments.domain;
 
 public class Statistics {
-    private TestResult anagramResults;
+    private TestResult dragAndDropResults;
     private TestResult visionResults;
     private TestResult gpsResults;
 
-    public TestResult getAnagramResults() {
-        return anagramResults;
+    public TestResult getDragAndDropResults() {
+        return dragAndDropResults;
     }
 
-    public void setAnagramResults(TestResult anagramResults) {
-        this.anagramResults = anagramResults;
+    public void setDragAndDropResults(TestResult dragAndDropResults) {
+        this.dragAndDropResults = dragAndDropResults;
     }
 
     public TestResult getGpsResults() {

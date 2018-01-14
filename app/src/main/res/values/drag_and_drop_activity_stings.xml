@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="empty_string_warning">Please enter not empty string.</string>
     <string name="success_message">Correct! Congratulations.</string>
     <string name="incorrect_message">Incorrect. Pleas try again.</string>
-    <string name="hint_input_message">Please enter original word</string>
-    <string name="submit_message">Submit</string>
 </resources>
