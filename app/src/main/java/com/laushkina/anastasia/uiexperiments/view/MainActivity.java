@@ -101,7 +101,7 @@ public class MainActivity extends Activity implements NavigationView.OnNavigatio
     }
 
     public void showAnagram() {
-        changeContent(new AnagramFragment());
+        changeContent(new DragAndDropFragment());
     }
 
     private void changeContent(Fragment fragment){

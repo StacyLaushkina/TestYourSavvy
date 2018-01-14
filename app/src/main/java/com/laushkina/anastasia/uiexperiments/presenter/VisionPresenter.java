@@ -12,7 +12,7 @@ public class VisionPresenter {
 
     public VisionPresenter(Context context) {
         Statistics currentStatistics = StatisticsRepository.getStatistics(context);
-        Integer amountOfCorrect = currentStatistics.getAnagramResults().getAmountOfCorrectAnswers();
+        Integer amountOfCorrect = currentStatistics.getDragAndDropResults().getAmountOfCorrectAnswers();
         WordsDictionary.getInstance().setIndexOfLast(amountOfCorrect == null ? -1 : amountOfCorrect - 1);
     }
 
