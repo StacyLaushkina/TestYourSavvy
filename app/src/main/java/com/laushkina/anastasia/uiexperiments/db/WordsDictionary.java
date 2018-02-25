@@ -5,6 +5,7 @@ import java.util.List;
 
 public class WordsDictionary {
     public static final int wordLength = 5;
+    public static final int wordsCount = 6;
     private List<String> words;
     private int indexOfLast;
     private static WordsDictionary instance;

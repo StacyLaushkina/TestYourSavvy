@@ -4,8 +4,9 @@ import android.content.Context;
 
 import com.laushkina.anastasia.uiexperiments.db.StatisticsRepository;
 import com.laushkina.anastasia.uiexperiments.db.WordsDictionary;
-import com.laushkina.anastasia.uiexperiments.domain.Statistics;
+import com.laushkina.anastasia.uiexperiments.domain.stats.Statistics;
 import com.laushkina.anastasia.uiexperiments.domain.SuggestionLettersGenerator;
+import com.laushkina.anastasia.uiexperiments.domain.stats.StatisticsType;
 
 import java.util.Random;
 
@@ -19,7 +20,7 @@ public class DragAndDropPresenter {
 
     public DragAndDropPresenter(Context context) {
         Statistics currentStatistics = StatisticsRepository.getStatistics(context);
-        Integer amountOfCorrect = currentStatistics.getDragAndDropResults().getAmountOfCorrectAnswers();
+        Integer amountOfCorrect = currentStatistics.getResults(StatisticsType.DragAndDrop).getAmountOfCorrectAnswers();
         WordsDictionary.getInstance().setIndexOfLast(amountOfCorrect == null ? -1 : amountOfCorrect - 1);
         random = new Random();
         suggestionLettersGenerator = new SuggestionLettersGenerator();
@@ -55,12 +56,20 @@ public class DragAndDropPresenter {
         return trueWord.equals(suggestedWord);
     }
 
+    // TODO refactor
     public void saveSuccess(Context context){
         Statistics currentStatistics = StatisticsRepository.getStatistics(context);
-        Integer amountOfAssumptions = currentStatistics.getDragAndDropResults().getAmountOfAssumptions();
-        Integer amountOfCorrect= currentStatistics.getDragAndDropResults().getAmountOfCorrectAnswers();
-        currentStatistics.getDragAndDropResults().setAmountOfAssumptions(amountOfAssumptions + 1);
-        currentStatistics.getDragAndDropResults().setAmountOfCorrectAnswers(amountOfCorrect + 1);
+        Integer amountOfAssumptions = currentStatistics.getResults(StatisticsType.DragAndDrop).getAmountOfAssumptions();
+        Integer amountOfCorrect= currentStatistics.getResults(StatisticsType.DragAndDrop).getAmountOfCorrectAnswers();
+        currentStatistics.getResults(StatisticsType.DragAndDrop).setAmountOfAssumptions(amountOfAssumptions + 1);
+        currentStatistics.getResults(StatisticsType.DragAndDrop).setAmountOfCorrectAnswers(amountOfCorrect + 1);
+        StatisticsRepository.saveStatistics(context, currentStatistics);
+    }
+
+    public void saveFailure(Context context){
+        Statistics currentStatistics = StatisticsRepository.getStatistics(context);
+        Integer amountOfAssumptions = currentStatistics.getResults(StatisticsType.DragAndDrop).getAmountOfAssumptions();
+        currentStatistics.getResults(StatisticsType.DragAndDrop).setAmountOfAssumptions(amountOfAssumptions + 1);
         StatisticsRepository.saveStatistics(context, currentStatistics);
     }
 }

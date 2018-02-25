@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable name="statistics" type="com.laushkina.anastasia.uiexperiments.view.statistics.StatisticsViewModel"/>
+        <variable name="fragment" type="com.laushkina.anastasia.uiexperiments.view.statistics.StatisticsFragment"/>
+    </data>
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Current statistics:"
+            android:textSize="@dimen/text_size_big"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="@dimen/default_margin"/>
+
+        <TextView
+            android:id="@+id/drag_and_drop_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/drag_and_drop_title"
+            android:textSize="@dimen/text_size_big"
+            android:layout_below="@+id/title"
+            android:layout_margin="@dimen/default_margin"/>
+
+        <TextView
+            android:id="@+id/drag_and_drop_valid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{statistics.dragAndDropResults.amountOfCorrect}"
+            android:textSize="@dimen/text_size_big"
+            android:layout_toEndOf="@+id/drag_and_drop_label"
+            android:layout_alignBaseline="@+id/drag_and_drop_label"
+            android:layout_margin="@dimen/default_margin"
+            android:textColor="@android:color/holo_green_dark"/>
+
+        <TextView
+            android:id="@+id/drag_and_drop_invalid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{statistics.dragAndDropResults.amountOfIncorrect}"
+            android:textSize="@dimen/text_size_big"
+            android:layout_toEndOf="@+id/drag_and_drop_valid"
+            android:layout_alignBaseline="@+id/drag_and_drop_label"
+            android:layout_margin="@dimen/default_margin"
+            android:textColor="@android:color/holo_red_dark"/>
+
+        <TextView
+            android:id="@+id/drag_and_drop_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{statistics.dragAndDropResults.total}"
+            android:textSize="@dimen/text_size_big"
+            android:layout_toEndOf="@+id/drag_and_drop_invalid"
+            android:layout_alignBaseline="@+id/drag_and_drop_label"
+            android:layout_margin="@dimen/default_margin"/>
+
+        <TextView
+            android:id="@+id/vision_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/vision_title"
+            android:textSize="@dimen/text_size_big"
+            android:layout_below="@+id/drag_and_drop_label"
+            android:layout_margin="@dimen/default_margin"/>
+
+        <TextView
+            android:id="@+id/vision_valid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{statistics.visionResults.amountOfCorrect}"
+            android:textSize="@dimen/text_size_big"
+            android:layout_toEndOf="@+id/vision_label"
+            android:layout_alignBaseline="@+id/vision_label"
+            android:layout_margin="@dimen/default_margin"
+            android:textColor="@android:color/holo_green_dark"/>
+
+        <TextView
+            android:id="@+id/vision_invalid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{statistics.visionResults.amountOfIncorrect}"
+            android:textSize="@dimen/text_size_big"
+            android:layout_toEndOf="@+id/vision_valid"
+            android:layout_alignBaseline="@+id/vision_label"
+            android:layout_margin="@dimen/default_margin"
+            android:textColor="@android:color/holo_red_dark"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{statistics.visionResults.total}"
+            android:textSize="@dimen/text_size_big"
+            android:layout_toEndOf="@+id/vision_invalid"
+            android:layout_alignBaseline="@+id/vision_valid"
+            android:layout_margin="@dimen/default_margin"/>
+
+        <Button
+            android:id="@+id/clear_statistics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/default_margin"
+            android:onClick="@{() ->fragment.onClearStatisticsClick()}"
+            android:text="Clear" />
+    </RelativeLayout>
+</layout>

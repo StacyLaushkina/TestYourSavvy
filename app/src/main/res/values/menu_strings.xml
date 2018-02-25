@@ -5,4 +5,7 @@
 
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
+
+    <string name="drag_and_drop_title">Drag and Drop</string>
+    <string name="vision_title">Vision</string>
 </resources>

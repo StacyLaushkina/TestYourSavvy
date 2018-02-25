@@ -11,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.laushkina.anastasia.uiexperiments.R;
@@ -134,6 +132,7 @@ public class DragAndDropFragment extends Fragment implements View.OnTouchListene
 
     private void onIncorrectAnswer(){
         emptyLetter.setBackground(getResources().getDrawable(R.drawable.drag_and_drop_letter_error_background));
+        presenter.saveFailure(getActivity());
         ((MainActivity)getActivity()).showToast(getResources().getString(R.string.incorrect_message));
     }
 

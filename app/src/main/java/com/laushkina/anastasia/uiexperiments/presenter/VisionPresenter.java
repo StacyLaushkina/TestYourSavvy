@@ -4,7 +4,8 @@ import android.content.Context;
 
 import com.laushkina.anastasia.uiexperiments.db.StatisticsRepository;
 import com.laushkina.anastasia.uiexperiments.db.WordsDictionary;
-import com.laushkina.anastasia.uiexperiments.domain.Statistics;
+import com.laushkina.anastasia.uiexperiments.domain.stats.Statistics;
+import com.laushkina.anastasia.uiexperiments.domain.stats.StatisticsType;
 
 public class VisionPresenter {
 
@@ -12,7 +13,7 @@ public class VisionPresenter {
 
     public VisionPresenter(Context context) {
         Statistics currentStatistics = StatisticsRepository.getStatistics(context);
-        Integer amountOfCorrect = currentStatistics.getDragAndDropResults().getAmountOfCorrectAnswers();
+        Integer amountOfCorrect = currentStatistics.getResults(StatisticsType.Vision).getAmountOfCorrectAnswers();
         WordsDictionary.getInstance().setIndexOfLast(amountOfCorrect == null ? -1 : amountOfCorrect - 1);
     }
 
@@ -27,17 +28,17 @@ public class VisionPresenter {
 
     public void saveFailure(Context context){
         Statistics currentStatistics = StatisticsRepository.getStatistics(context);
-        Integer amountOfAssumptions = currentStatistics.getVisionResults().getAmountOfAssumptions();
-        currentStatistics.getVisionResults().setAmountOfAssumptions(amountOfAssumptions + 1);
+        Integer amountOfAssumptions = currentStatistics.getResults(StatisticsType.Vision).getAmountOfAssumptions();
+        currentStatistics.getResults(StatisticsType.Vision).setAmountOfAssumptions(amountOfAssumptions + 1);
         StatisticsRepository.saveStatistics(context, currentStatistics);
     }
 
     public void saveSuccess(Context context){
         Statistics currentStatistics = StatisticsRepository.getStatistics(context);
-        Integer amountOfAssumptions = currentStatistics.getVisionResults().getAmountOfAssumptions();
-        Integer amountOfCorrect= currentStatistics.getVisionResults().getAmountOfCorrectAnswers();
-        currentStatistics.getVisionResults().setAmountOfAssumptions(amountOfAssumptions + 1);
-        currentStatistics.getVisionResults().setAmountOfCorrectAnswers(amountOfCorrect + 1);
+        Integer amountOfAssumptions = currentStatistics.getResults(StatisticsType.Vision).getAmountOfAssumptions();
+        Integer amountOfCorrect= currentStatistics.getResults(StatisticsType.Vision).getAmountOfCorrectAnswers();
+        currentStatistics.getResults(StatisticsType.Vision).setAmountOfAssumptions(amountOfAssumptions + 1);
+        currentStatistics.getResults(StatisticsType.Vision).setAmountOfCorrectAnswers(amountOfCorrect + 1);
         StatisticsRepository.saveStatistics(context, currentStatistics);
     }
 }

@@ -9,11 +9,17 @@
         <item
             android:id="@+id/nav_drag_n_drop"
             android:icon="@drawable/ic_touch"
-            android:title="Drag and Drop" />
+            android:title="@string/drag_and_drop_title" />
         <item
             android:id="@+id/nav_vision"
             android:icon="@drawable/ic_vision"
-            android:title="Vision" />
+            android:title="@string/vision_title" />
+
+        <item
+            android:id="@+id/nav_statistics"
+            android:icon="@drawable/ic_stats"
+            android:title="Statistics"/>
+
     </group>
 
 </menu>

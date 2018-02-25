@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.laushkina.anastasia.uiexperiments.R;
+import com.laushkina.anastasia.uiexperiments.view.statistics.StatisticsFragment;
 import com.laushkina.anastasia.uiexperiments.view.vision.VisionActivity;
 
 public class MainActivity extends Activity implements NavigationView.OnNavigationItemSelectedListener{
@@ -85,10 +86,13 @@ public class MainActivity extends Activity implements NavigationView.OnNavigatio
                 showHome();
                 break;
             case R.id.nav_drag_n_drop:
-                showAnagram();
+                showDragAndDrop();
                 break;
             case R.id.nav_vision:
                 navigateToVision();
+                break;
+            case R.id.nav_statistics:
+                showStatistics();
         }
 
         DrawerLayout drawer = getDrawerLayout();
@@ -100,8 +104,12 @@ public class MainActivity extends Activity implements NavigationView.OnNavigatio
         changeContent(new HomeFragment());
     }
 
-    public void showAnagram() {
+    public void showDragAndDrop() {
         changeContent(new DragAndDropFragment());
+    }
+
+    public void showStatistics(){
+        changeContent(new StatisticsFragment());
     }
 
     private void changeContent(Fragment fragment){

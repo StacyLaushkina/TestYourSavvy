@@ -3,8 +3,8 @@ package com.laushkina.anastasia.uiexperiments.db;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.laushkina.anastasia.uiexperiments.domain.Statistics;
-import com.laushkina.anastasia.uiexperiments.domain.TestResult;
+import com.laushkina.anastasia.uiexperiments.domain.stats.Statistics;
+import com.laushkina.anastasia.uiexperiments.domain.stats.TestResult;
 
 public class StatisticsRepository {
 
@@ -34,6 +34,16 @@ public class StatisticsRepository {
         editor.putInt(visionAmountOfCorrectAnswers, statistics.getVisionResults().getAmountOfCorrectAnswers());
         editor.putInt(dragAndDropAmountOfAssumptions, statistics.getDragAndDropResults().getAmountOfAssumptions());
         editor.putInt(visionAmountOfAssumptions, statistics.getVisionResults().getAmountOfAssumptions());
-        editor.commit();
+        editor.apply();
+    }
+
+    public static void clearStatistics(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences(preferenceFileKey, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.remove(dragAndDropAmountOfCorrectAnswers);
+        editor.remove(visionAmountOfCorrectAnswers);
+        editor.remove(dragAndDropAmountOfAssumptions);
+        editor.remove(visionAmountOfAssumptions);
+        editor.apply();
     }
 }
